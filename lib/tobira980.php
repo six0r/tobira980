@@ -244,7 +244,7 @@ final class Robot {
 		return $this->request("get", "week");
 	}
 
-	public function getPreferences() {
+	public function getPreferences() : Preferences {
 		return Preferences::decode($this->request("get", "prefs"));
 	}
 	
