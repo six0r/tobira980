@@ -50,6 +50,17 @@ try {
 
 # Methods
 
+All the methods below - if not specified otherwise - return a stdClass object which is decoded from the robot response without other processing.
+
+If an error occurs, they may throw the following exceptions :
+
+- `HttpNoResponseException` : the library cannot make a HTTPS request to the robot
+- `HttpAuthRequiredException` : the provided password was not accepted by the robot
+- `PasswordTimeoutException` : only thrown by Robot::getPassword()
+- `RequestNotOkException` : the robot did not respond successfuly to the request
+- `InvalidResponseException` : the robot response was not understood by the library
+- `InvalidParameterException` : one or more parameters are not valid
+
 ## Robot object
 
 - `Robot::getPassword(int $timeout = 60, callable $progress = null) : string`
