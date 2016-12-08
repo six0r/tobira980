@@ -41,7 +41,7 @@ final class PreferenceFlags {
 	public $cleaningPasses;
 	public $alwaysFinish;
 
-	public function __construct(int $rawFlags, string $carpetBoost, bool $edgeClean, string $cleaningPasses, bool $alwaysFinish) {
+	private function __construct(int $rawFlags, string $carpetBoost, bool $edgeClean, string $cleaningPasses, bool $alwaysFinish) {
 		$this->rawFlags = $rawFlags;
 		$this->carpetBoost = $carpetBoost;
 		$this->edgeClean = $edgeClean;
@@ -122,7 +122,7 @@ final class Preferences {
 	public $timezone;
 	public $name;
 
-	public function __construct(PreferenceFlags $flags, int $lang, string $timezone, string $name) {
+	private function __construct(PreferenceFlags $flags, int $lang, string $timezone, string $name) {
 		$this->flags = $flags;
 		$this->lang = $lang;
 		$this->timezone = $timezone;
@@ -191,7 +191,7 @@ final class Robot {
 				throw new HttpNoResponseException("no answer from {$this->ipAddress}");
 			}
 			if (preg_match('/ 401 /', $http_response_header[0])) {
-				throw new HttpAuthRequiredException();
+				throw new HttpAuthRequiredException("wrong password");
 			}
 			throw new \Exception("cannot send request {$method}/{$command} to robot");
 		}
