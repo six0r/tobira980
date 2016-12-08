@@ -50,7 +50,7 @@ try {
 
 # Methods
 
-- Robot::getPassword(int \$timeout = 60, callable \$progress = null) : string
+- Robot::getPassword(int $timeout = 60, callable $progress = null) : string
 - Robot::getTime()
 - Robot::getBbrun()
 - Robot::getLangs()
@@ -73,7 +73,7 @@ try {
 - Robot::setTime(array $args)
 - Robot::setPtime(array $args)
 
-- PreferenceFlags::setCarpetBoost(string \$mode) : self
-- PreferenceFlags::setEdgeClean(bool \$mode) : self
-- PreferenceFlags::setCleaningPasses(string \$mode) : self
-- PreferenceFlags::setAlwaysFinish(bool \$mode) : self
+- PreferenceFlags::setCarpetBoost(string $mode) : self
+- PreferenceFlags::setEdgeClean(bool $mode) : self
+- PreferenceFlags::setCleaningPasses(string $mode) : self
+- PreferenceFlags::setAlwaysFinish(bool $mode) : self
