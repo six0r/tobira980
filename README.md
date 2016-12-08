@@ -50,6 +50,8 @@ try {
 
 # Methods
 
+## Robot object
+
 - `Robot::getPassword(int $timeout = 60, callable $progress = null) : string`
 - `Robot::getTime()`
 - `Robot::getBbrun()`
@@ -73,7 +75,9 @@ try {
 - `Robot::setTime(array $args)`
 - `Robot::setPtime(array $args)`
 
+## PreferenceFlags object
+
 - `PreferenceFlags::setCarpetBoost(string $mode) : self`
 - `PreferenceFlags::setEdgeClean(bool $mode) : self`
 - `PreferenceFlags::setCleaningPasses(string $mode) : self`
-- `PreferenceFlags::setAlwaysFinish(bool $mode) : self
+- `PreferenceFlags::setAlwaysFinish(bool $mode) : self`
