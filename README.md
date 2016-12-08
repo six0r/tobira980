@@ -9,43 +9,44 @@ It is heavily based on the reverse engineering work of [koalazak](https://github
 In order to take control of your robot you will have to request its password first :
 
 ```php
-<?php 
-
 require "tobira980.php";
 
-try {
-	echo "Trying to get password, please long-press the home button on the robot until you hear a signal ...\n";
-	$pass = (new Tobira980\Robot("192.168.0.12"))->getPassword();
-	echo "Got password : {$pass}\n";
-} catch (Exception $e) {
-	echo "error: {$e->getMessage()}\n";
-	exit(1);
-}
+echo "Trying to get password, please long-press the home button on the robot until you hear a signal ...\n";
+$pass = (new Tobira980\Robot("192.168.0.12"))->getPassword();
+echo "Got password : {$pass}\n";
 ```
 
 Then you may use the password to send commands and request information from the robot :
 
 ```php
-<?php
-
 require "tobira980.php";
 
-try {
-	$r = new Tobira980\Robot("192.168.0.12", "_my_password_");
-	echo "Robot status :\n";
-	var_dump($r->getMission());
-	echo "Start ...\n";
-	$r->start();
-	sleep(10);
-	echo "Stop ...\n";
-	$r->stop();
-	sleep(10);
-	echo "Dock ...\n";
-	$r->dock();
-} catch (Exception $e) {
-	echo "error: {$e->getMessage()}\n";
-	exit(1);
-}
+// Connect to the robot using its IP address and password
+$r = new Tobira980\Robot("192.168.0.12", "_my_password_");
+
+// Dump status
+echo "Robot status :\n";
+var_dump($r->getMission());
+
+// Change configuration flags
+echo "Change preferences ...\n";
+$prefs = $r->getPreferences();
+$prefs->flags->setCarpetBoost("auto")->setEdgeClean(true)->setCleaningPasses("auto")->setAlwaysFinish(true);
+$r->setPreferences($prefs);
+
+// Start cleaning cycle
+echo "Start ...\n";
+$r->start();
+sleep(10);
+
+// Stop cycle
+echo "Stop ...\n";
+$r->stop();
+sleep(10);
+
+// Back to the dock
+echo "Dock ...\n";
+$r->dock();
 ```
 
 # Methods
