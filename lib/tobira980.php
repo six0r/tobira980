@@ -193,12 +193,15 @@ final class Robot {
 			if (preg_match('/ 401 /', $http_response_header[0])) {
 				throw new HttpAuthRequiredException("wrong password");
 			}
-			throw new \Exception("cannot send request {$method}/{$command} to robot");
+			throw new InvalidResponseException("cannot send request {$method}/{$command} to robot");
 		}
 		if (!$ret = @json_decode($resp)) {
-			throw new \Exception("cannot decode response from robot");
+			throw new InvalidResponseException("cannot decode response from robot");
 		}
 		if (!property_exists($ret, "ok")) {
+			if (isset($ret->err)) {
+				throw new RequestNotOkException("robot responded with error code {$ret->err}", $ret->err);
+			}
 			throw new RequestNotOkException("robot response is not valid");
 		}
 		return $ret->ok;
