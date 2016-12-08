@@ -34,7 +34,7 @@ final class PreferenceFlags {
 		1025 => "two",
 	];
 	
-	public $rawFlags;
+	private $rawFlags;
 	
 	public $carpetBoost;
 	public $edgeClean;
