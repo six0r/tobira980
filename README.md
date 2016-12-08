@@ -50,30 +50,30 @@ try {
 
 # Methods
 
-- Robot::getPassword(int $timeout = 60, callable $progress = null) : string
-- Robot::getTime()
-- Robot::getBbrun()
-- Robot::getLangs()
-- Robot::getSys()
-- Robot::getWirelessLastStatus()
-- Robot::getWeek()
-- Robot::getPreferences() : Preferences
-- Robot::setPreferences(Preferences $prefs)
-- Robot::getMission()
-- Robot::getWirelessConfig()
-- Robot::getWirelessStatus()
-- Robot::getCloudConfig()
-- Robot::getSKU()
-- Robot::start()
-- Robot::pause()
-- Robot::stop()
-- Robot::resume()
-- Robot::dock()
-- Robot::setWeek(array $args)
-- Robot::setTime(array $args)
-- Robot::setPtime(array $args)
+- `Robot::getPassword(int $timeout = 60, callable $progress = null) : string`
+- `Robot::getTime()`
+- `Robot::getBbrun()`
+- `Robot::getLangs()`
+- `Robot::getSys()`
+- `Robot::getWirelessLastStatus()`
+- `Robot::getWeek()`
+- `Robot::getPreferences() : Preferences`
+- `Robot::setPreferences(Preferences $prefs)`
+- `Robot::getMission()`
+- `Robot::getWirelessConfig()`
+- `Robot::getWirelessStatus()`
+- `Robot::getCloudConfig()`
+- `Robot::getSKU()`
+- `Robot::start()`
+- `Robot::pause()`
+- `Robot::stop()`
+- `Robot::resume()`
+- `Robot::dock()`
+- `Robot::setWeek(array $args)`
+- `Robot::setTime(array $args)`
+- `Robot::setPtime(array $args)`
 
-- PreferenceFlags::setCarpetBoost(string $mode) : self
-- PreferenceFlags::setEdgeClean(bool $mode) : self
-- PreferenceFlags::setCleaningPasses(string $mode) : self
-- PreferenceFlags::setAlwaysFinish(bool $mode) : self
+- `PreferenceFlags::setCarpetBoost(string $mode) : self`
+- `PreferenceFlags::setEdgeClean(bool $mode) : self`
+- `PreferenceFlags::setCleaningPasses(string $mode) : self`
+- `PreferenceFlags::setAlwaysFinish(bool $mode) : self
