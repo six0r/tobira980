@@ -141,7 +141,7 @@ final class Preferences {
 		);
 	}
 
-	public function encode() {
+	public function encode() : array {
 		return [
 			"flags" => $this->flags->encode(),
 			"lang" => $this->lang,
@@ -169,7 +169,7 @@ final class Robot {
 		if (isset($args)) {
 			$reqArgs[] = $args;
 		}
-		$resp = @file_get_contents("https://" . (isset($this->password) ? "user:{$this->password}@" : "") . $this->ipAddress . "/umi", false, stream_context_create($opts = [
+		$resp = @file_get_contents("https://" . (isset($this->password) ? "user:{$this->password}@" : "") . $this->ipAddress . "/umi", false, stream_context_create([
 			"http" => [
 				"protocol_version" => "1.1",
 				"timeout" => 3,
@@ -228,7 +228,7 @@ final class Robot {
 		return $this->request("get", "bbrun");
 	}
 
-    public function getLangs() {
+	public function getLangs() {
 		return $this->request("get", "langs");
 	}
 

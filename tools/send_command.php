@@ -1,7 +1,7 @@
 #!/usr/bin/env php
 <?php declare(strict_types=1);
 
-require "../lib/tobira980.php";
+require __DIR__ . "/../lib/tobira980.php";
 
 $opts = getopt("h:p:c:");
 if (!isset($opts["h"]) || !isset($opts["p"]) || !isset($opts["c"])) {

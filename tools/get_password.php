@@ -1,7 +1,7 @@
 #!/usr/bin/env php
 <?php declare(strict_types=1);
 
-require "../lib/tobira980.php";
+require __DIR__ . "/../lib/tobira980.php";
 
 $opts = getopt("h:");
 if (!isset($opts["h"])) {
@@ -10,9 +10,8 @@ if (!isset($opts["h"])) {
 }
 
 try {
-	$r = new Tobira980\Robot($opts["h"]);
 	echo "Trying to get password, please long-press the home button on the robot until you hear a signal .";
-	$pass = $r->getPassword(120, function() { echo " ."; });
+	$pass = (new Tobira980\Robot($opts["h"]))->getPassword(120, function() { echo " ."; });
 	echo "\n";
 	echo "Got password : {$pass}\n";
 } catch (Exception $e) {
