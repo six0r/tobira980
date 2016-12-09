@@ -11,9 +11,12 @@ In order to take control of your robot you will have to request its password fir
 ```php
 require "tobira980.php";
 
+// Connect to the robot using its IP address
+$r = new Tobira980\Robot("192.168.0.12");
+
+// Fetch password from the robot
 echo "Trying to get password, please long-press the home button on the robot until you hear a signal ...\n";
-$pass = (new Tobira980\Robot("192.168.0.12"))->getPassword();
-echo "Got password : {$pass}\n";
+echo "Got password : " . $r->getPassword();
 ```
 
 Then you may use the password to send commands and request information from the robot :
