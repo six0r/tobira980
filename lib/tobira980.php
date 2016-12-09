@@ -152,6 +152,100 @@ final class Preferences {
 
 }
 
+final class WeekDays {
+
+	public $days = [];
+	private $week;
+
+	const NAMES = [
+		"sun" => 0,
+		"mon" => 1,
+		"tue" => 2,
+		"wed" => 3,
+		"thu" => 4,
+		"fri" => 5,
+		"sat" => 6,
+	];
+	
+	static private function parseName($day) : int {
+		if (is_numeric($day) && ($day >= 0) && ($day <= 6)) {
+			return (int)$day;
+		} else if (isset(self::NAMES[strtolower($day)])) {
+			return self::NAMES[strtolower($day)];
+		}
+		throw new InvalidParameterException("{$day} is not a valid day of week");
+	}
+	
+	public function __construct(WeekSchedule $week, array $days) {
+		$this->week = $week;
+		foreach ($days as $name) {
+			$this->days[] = self::parseName($name);
+		}
+	}
+
+	public function setActive(bool $active) : self {
+		foreach ($this->days as $day) {
+			$this->week->sched[$day]["active"] = $active;
+		}
+		return $this;
+	}
+
+	public function setTime(int $hours, int $minutes = 0) : self {
+		foreach ($this->days as $day) {
+			$this->week->sched[$day]["time"] = $hours . ":" . str_pad((string)$minutes, 2, "0", STR_PAD_LEFT);
+		}
+		return $this;
+	}
+
+}
+
+final class WeekSchedule {
+
+	public $sched;
+
+	private function __construct(array $sched) {
+		$this->sched = $sched;
+	}
+
+	static public function decode($resp) : self {
+		$sched = [];
+		for ($d = 0; $d <= 6; $d++) {
+			$sched[$d] = [
+				"active" => $resp->cycle[$d] === "start",
+				"time" => $resp->h[$d] . ":" . str_pad((string)$resp->m[$d], 2, "0", STR_PAD_LEFT),
+			];
+		}
+		return new self($sched);
+	}
+
+	public function encode() : array {
+		$ret = [
+			"cycle" => [],
+			"h" => [],
+			"m" => [],
+		];
+		for ($d = 0; $d <= 6; $d++) {
+			$ret["cycle"][$d] = $this->sched[$d]["active"] ? "start" : "none";
+			$ret["h"][$d] = (int)strtok($this->sched[$d]["time"], ":");
+			$ret["m"][$d] = (int)strtok("");
+		}
+		return $ret;
+	}
+
+	public function day($name) : WeekDays {
+		return new WeekDays($this, [ $name ]);
+	}
+
+	public function days(array $days) : WeekDays {
+		return new WeekDays($this, $days);
+	}
+
+	public function allDays() : WeekDays {
+		return new WeekDays($this, [ 0, 1, 2, 3, 4, 5, 6 ]);
+	}
+
+}
+
 final class Robot {
 
 	public $ipAddress;
@@ -243,10 +337,14 @@ final class Robot {
 		return $this->request("get", "wllaststat");
 	}
 
-	public function getWeek() {
-		return $this->request("get", "week");
+	public function getWeek() : WeekSchedule {
+		return WeekSchedule::decode($this->request("get", "week"));
 	}
 
+	public function setWeek(WeekSchedule $week) {
+		return $this->request("set", "week", $week->encode());
+	}
+	
 	public function getPreferences() : Preferences {
 		return Preferences::decode($this->request("get", "prefs"));
 	}
@@ -293,10 +391,6 @@ final class Robot {
 	
 	public function dock() {
 		return $this->request("set", "cmd", [ "op" => "dock" ]);
-	}
-
-	public function setWeek(array $args) {
-		return $this->request("set", "week", $args);
 	}
 
 	public function setTime(array $args) {

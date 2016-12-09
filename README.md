@@ -24,19 +24,27 @@ require "tobira980.php";
 // Connect to the robot using its IP address and password
 $r = new Tobira980\Robot("192.168.0.12", "_my_password_");
 
-// Dump status
-var_dump($r->getMission());
-
 // Fetch configuration
 $prefs = $r->getPreferences();
 // Change some values
 $prefs->flags->setCarpetBoost("auto")->setEdgeClean(true)->setCleaningPasses("auto")->setAlwaysFinish(true);
-// Send new configuration to the robot
+// Send configuration to the robot
 $r->setPreferences($prefs);
+
+// Fetch week schedule
+$week = $r->getWeek();
+// Schedule cleaning cycle every work day at 8:30 AM and none on weekends
+$week->days([ "mon", "tue", "wed", "thu", "fri" ])->setTime(8, 30)->setActive(true);
+$week->days([ "sat", "sun" ])->setActive(false);
+// Send schedule to robot
+$r->setWeek($week);
 
 // Start cleaning cycle
 $r->start();
 sleep(10);
+
+// Dump status
+var_dump($r->getMission());
 
 // Stop cycle
 $r->stop();
@@ -58,7 +66,8 @@ All the methods below - unless specified otherwise - return the decoded response
 - `Robot::getLangs()`
 - `Robot::getSys()`
 - `Robot::getWirelessLastStatus()`
-- `Robot::getWeek()`
+- `Robot::getWeek() : WeekSchedule`
+- `Robot::setWeek(WeekSchedule $week)`
 - `Robot::getPreferences() : Preferences`
 - `Robot::setPreferences(Preferences $prefs)`
 - `Robot::getMission()`
@@ -71,7 +80,6 @@ All the methods below - unless specified otherwise - return the decoded response
 - `Robot::stop()`
 - `Robot::resume()`
 - `Robot::dock()`
-- `Robot::setWeek(array $args)`
 - `Robot::setTime(array $args)`
 - `Robot::setPtime(array $args)`
 
@@ -81,6 +89,17 @@ All the methods below - unless specified otherwise - return the decoded response
 - `PreferenceFlags::setEdgeClean(bool $mode) : self`
 - `PreferenceFlags::setCleaningPasses(string $mode) : self`
 - `PreferenceFlags::setAlwaysFinish(bool $mode) : self`
+
+## WeekSchedule object
+
+- `WeekSchedule::day($name) : WeekDays`
+- `WeekSchedule::days(array $days) : WeekDays`
+- `WeekSchedule::allDays() : WeekDays`
+
+## WeekDays object
+
+- `WeekDays::setActive(bool $active) : self`
+- `WeekDays::setTime(int $hours, int $minutes = 0) : self`
 
 ## Error handling
 
