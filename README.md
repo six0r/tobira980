@@ -16,7 +16,10 @@ $r = new Tobira980\Robot("192.168.0.12");
 
 // Fetch password from the robot
 echo "Trying to get password, please long-press the home button on the robot until you hear a signal ...\n";
-echo "Got password : " . $r->getPassword();
+$pass = $r->getPassword();
+
+// Write it down because this will be needed later
+echo "Got password : {$pass}\n";
 ```
 
 Then you may use the password to send commands and request information from the robot :
