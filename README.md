@@ -25,42 +25,30 @@ require "tobira980.php";
 $r = new Tobira980\Robot("192.168.0.12", "_my_password_");
 
 // Dump status
-echo "Robot status :\n";
 var_dump($r->getMission());
 
-// Change configuration flags
-echo "Change preferences ...\n";
+// Fetch configuration
 $prefs = $r->getPreferences();
+// Change some values
 $prefs->flags->setCarpetBoost("auto")->setEdgeClean(true)->setCleaningPasses("auto")->setAlwaysFinish(true);
+// Send new configuration to the robot
 $r->setPreferences($prefs);
 
 // Start cleaning cycle
-echo "Start ...\n";
 $r->start();
 sleep(10);
 
 // Stop cycle
-echo "Stop ...\n";
 $r->stop();
 sleep(10);
 
-// Back to the dock
-echo "Dock ...\n";
+// Back to the irons
 $r->dock();
 ```
 
 # Methods
 
-All the methods below - if not specified otherwise - return a stdClass object which is decoded from the robot response without other processing.
-
-If an error occurs, they may throw the following exceptions :
-
-- `HttpNoResponseException` : the library cannot make a HTTPS request to the robot
-- `HttpAuthRequiredException` : the provided password was not accepted by the robot
-- `PasswordTimeoutException` : only thrown by Robot::getPassword()
-- `RequestNotOkException` : the robot did not respond successfuly to the request
-- `InvalidResponseException` : the robot response was not understood by the library
-- `InvalidParameterException` : one or more parameters are not valid
+All the methods below - unless specified otherwise - return the decoded response from the robot without any processing.
 
 ## Robot object
 
@@ -93,3 +81,14 @@ If an error occurs, they may throw the following exceptions :
 - `PreferenceFlags::setEdgeClean(bool $mode) : self`
 - `PreferenceFlags::setCleaningPasses(string $mode) : self`
 - `PreferenceFlags::setAlwaysFinish(bool $mode) : self`
+
+## Error handling
+
+If an error occurs, the following exceptions are thrown by the methods above :
+
+- `HttpNoResponseException` : the library cannot make a HTTPS request to the robot
+- `HttpAuthRequiredException` : the provided password was not accepted by the robot
+- `PasswordTimeoutException` : only thrown by Robot::getPassword()
+- `RequestNotOkException` : the robot did not respond successfuly to the request
+- `InvalidResponseException` : the robot response was not understood by the library
+- `InvalidParameterException` : one or more parameters are not valid
