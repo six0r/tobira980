@@ -86,9 +86,9 @@ All the methods below - unless specified otherwise - return the decoded response
 ## PreferenceFlags object
 
 - `PreferenceFlags::setCarpetBoost(string $mode) : self`
-- `PreferenceFlags::setEdgeClean(bool $mode) : self`
+- `PreferenceFlags::setEdgeClean(bool $mode = true) : self`
 - `PreferenceFlags::setCleaningPasses(string $mode) : self`
-- `PreferenceFlags::setAlwaysFinish(bool $mode) : self`
+- `PreferenceFlags::setAlwaysFinish(bool $mode = true) : self`
 
 ## WeekSchedule object
 
@@ -98,7 +98,7 @@ All the methods below - unless specified otherwise - return the decoded response
 
 ## WeekDays object
 
-- `WeekDays::setActive(bool $active) : self`
+- `WeekDays::setActive(bool $active = true) : self`
 - `WeekDays::setTime(int $hours, int $minutes = 0) : self`
 
 ## Error handling
