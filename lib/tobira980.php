@@ -78,7 +78,7 @@ final class PreferenceFlags {
 		return $this;
 	}
 
-	public function setEdgeClean(bool $mode) : self {
+	public function setEdgeClean(bool $mode = true) : self {
 		if ($mode) {
 			$this->rawFlags &= 65533;
 		} else {
@@ -103,7 +103,7 @@ final class PreferenceFlags {
 		return $this;
 	}
 
-	public function setAlwaysFinish(bool $mode) : self {
+	public function setAlwaysFinish(bool $mode = true) : self {
 		if ($mode) {
 			$this->rawFlags &= 65503;
 		} else {
@@ -183,7 +183,7 @@ final class WeekDays {
 		}
 	}
 
-	public function setActive(bool $active) : self {
+	public function setActive(bool $active = true) : self {
 		foreach ($this->days as $day) {
 			$this->week->sched[$day]["active"] = $active;
 		}

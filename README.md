@@ -34,7 +34,7 @@ $r->setPreferences($prefs);
 // Fetch week schedule
 $week = $r->getWeek();
 // Schedule cleaning cycle every work day at 8:30 AM and none on weekends
-$week->days([ "mon", "tue", "wed", "thu", "fri" ])->setTime(8, 30)->setActive(true);
+$week->days([ "mon", "tue", "wed", "thu", "fri" ])->setTime(8, 30)->setActive();
 $week->days([ "sat", "sun" ])->setActive(false);
 // Send schedule to robot
 $r->setWeek($week);
